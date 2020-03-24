@@ -10,4 +10,20 @@
 
 @implementation HAZEntry
 
+- (instancetype)initWithTitle:(NSString *)title bodyText:(NSString *)bodyText timeStamp:(NSDate *)timeStamp
+{
+    self = [super init];
+    if (self) {
+        _title = title;
+        _bodyText = bodyText;
+        if (timeStamp) {
+            _timeStamp = timeStamp;
+        }
+        else {
+            _timeStamp = [NSDate alloc];
+        }
+    }
+    return self;
+}
+
 @end

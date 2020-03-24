@@ -7,26 +7,58 @@
 //
 
 #import "HAZDetailViewController.h"
-
+#import "HAZEntryController.h"
+#import "HAZEntry.h"
 @interface HAZDetailViewController ()
 
 @end
 
 @implementation HAZDetailViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    if(self.entryLandingPad) {
+        self.entryTitleTextField.text = self.entryLandingPad.title;
+        self.entryBodyTextView.text = self.entryLandingPad.bodyText;
+        
+    }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+ #pragma mark - Navigation
+ 
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if (segue.identifier == @"toEntryDetalView") {
+        destinationVC = segue.destination
+    }
 }
-*/
+ 
 
+- (IBAction)saveEntryButtonTapped:(id)sender {
+    
+    NSString *title = self.entryTitleTextField.text;
+    NSString *bodyText = self.entryBodyTextView.text;
+    
+    if(self.entryLandingPad) {
+        HAZEntry *entry = self.entryLandingPad;
+        entry.title = title;
+        entry.bodyText = bodyText;
+        entry.timeStamp = [NSDate new];
+        [HAZEntryController.shared updateEntry:entry title:title bodyText:bodyText];
+        
+    }
+    else {
+        
+        
+        HAZEntry *entry = [[HAZEntry alloc] initWithTitle:title bodyText:bodyText timeStamp:[NSDate new]];
+        [HAZEntryController.shared addEntry:entry];
+    }
+}
+- (IBAction)clearEntryButtonTapped:(id)sender {
+    self.entryTitleTextField.text = @"";
+    self.entryBodyTextView.text = @"";
+}
 @end
+

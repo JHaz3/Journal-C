@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HAZEntryController.h"
+#import "HAZEntry.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HAZDetailViewController : UIViewController
+
+@property HAZEntry *entryLandingPad;
+@property (weak, nonatomic) IBOutlet UITextField *entryTitleTextField;
+@property (weak, nonatomic) IBOutlet UITextView *entryBodyTextView;
+- (IBAction)saveEntryButtonTapped:(id)sender;
+- (IBAction)clearEntryButtonTapped:(id)sender;
+
 
 @end
 
